@@ -3,11 +3,25 @@ FROM phusion/baseimage:0.9.17
 MAINTAINER David Falk
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+	wget \
     duply \
     ncftp \
     python-boto \
+#	python-pip \
     pwgen \
     && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
+	
+RUN apt-get remove -y --no-install-recommends \
+    duplicity \
+    && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
+	
+#RUN       pip install paramiko
+
+RUN       wget https://code.launchpad.net/duplicity/0.7-series/0.7.05/+download/duplicity-0.7.05.tar.gz && \
+          tar xzvf duplicity*
+
+RUN	  cd duplicity* && \
+	  python setup.py install
 
 VOLUME /root/
 VOLUME /backup/
