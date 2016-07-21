@@ -14,13 +14,14 @@ if [ ! -f /root/.gnupg/pubring.gpg ]
 then
 	#Generate GPG keys
 	echo "Generate GPG keys"
-	./duply-runner gen-key
+	duply-runner gen-key
 fi
 
 IFS=':' read -a profilesarray <<< "$PROFILES"
 for profile in "${profilesarray[@]}"; do
 	if [ ! -d /root/.duply/$profile ]
-		./duply-runner $profile create
+        then
+		duply-runner $profile create
 		echo "Created profile for $profile."
 	fi
 done
