@@ -6,7 +6,15 @@ then
     cp /cron/crons.conf /root/crons.conf
 else
     cp /root/crons.conf /cron/crons.conf
+    echo "Creating crons.conf with default values"
 fi
+
+if [ ! -f /root/.cache/acd_cli/oauth_data ]
+then
+    echo "Did not find oauth_data for acd_cli (Amazon Cloud Drive CLI)"
+fi
+
+acd_cli init
 
 crontab /root/crons.conf
 
@@ -21,8 +29,8 @@ IFS=':' read -a profilesarray <<< "$PROFILES"
 for profile in "${profilesarray[@]}"; do
 	if [ ! -d /root/.duply/$profile ]
         then
-		duply-runner $profile create
+		duply-runner /root/.duply/$profile create
 		echo "Created profile for $profile."
 	fi
 done
-env > /root/env.txt
+

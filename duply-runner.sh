@@ -42,7 +42,6 @@ All other commands will be interpreted as commands to duply.
 EOF
         ;;
     *)
-        DUPL_PARAMS="$DUPL_PARAMS --allow-source-mismatch"
         exec duply "$@"
         ;;
 esac
